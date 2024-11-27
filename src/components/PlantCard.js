@@ -1,7 +1,11 @@
+// import { updateSelectionOnFocus } from "@testing-library/user-event/dist/cjs/event/selection/updateSelectionOnFocus.js";
 import React, { useState } from "react";
 
 function PlantCard({plant, plants, setPlants}) {
   const [isInStock, setIsInStock] = useState(true)
+  const [newPrice, setNewPrice] = useState("")
+  
+
   function handleClick(){
     setIsInStock(p=>!p)
   }
@@ -11,6 +15,42 @@ function PlantCard({plant, plants, setPlants}) {
 
     fetch(`http://localhost:6001/plants/${plant.id}`,{method: "DELETE"})
     .catch(error => console.error("could not delete"))
+  }
+
+  function handlePrice(e){
+    setNewPrice(e.target.value)
+    
+
+
+  }
+  
+  function submitPrice(e){
+    e.preventDefault()
+    
+    // const updatedPlants = plants.map(p=>{
+    //   if(p.id===plant.id){
+    //     const updatedPlant = {...p, price: newPrice}
+    //     return updatedPlant
+    //   } else return p
+    // })
+    
+    
+
+    fetch(`http://localhost:6001/plants/${plant.id}`, {method: "PATCH", headers: {"Content-Type" : "application/json"}, body: JSON.stringify({price: newPrice})})
+    .then(response=>response.json())
+    .then((data) => {
+      if (data.id === plant.id) {
+        
+        const updatedPlants = plants.map((p) =>
+          p.id === plant.id ? { ...p, price: data.price } : p
+        );
+        setPlants(updatedPlants);  
+      }
+    })
+    .catch(error => console.error("could not patch price"))
+
+    
+
   }
   return (
     <li className="card" data-testid="plant-item">
@@ -22,8 +62,11 @@ function PlantCard({plant, plants, setPlants}) {
       ) : (
         <button onClick={handleClick}>Out of Stock</button>
       )}
-      {/* <button onClick={}>Update Price</button> */}
       <button onClick={handleDelete}>Delete</button>
+      <form onSubmit={submitPrice}>
+        <input onChange={handlePrice} value={newPrice} type="number" name="price" step="0.01" placeholder="Update Price" />
+        <button type="submit">Submit Price</button>
+      </form>
     </li>
   );
 }
