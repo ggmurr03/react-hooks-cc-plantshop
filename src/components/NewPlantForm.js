@@ -22,20 +22,29 @@ function NewPlantForm({plants, setPlants}) {
     const newPlant = {id: plants.length +`${name}`, name: name, image: image, price: price}
     setPlants([...plants, newPlant])
 
-   
-  }
-  const POSTPlant = {id: plants.length +`${name}`, name: name, image: image, price: price}
-
-  useEffect(()=>{
     fetch("http://localhost:6001/plants",{
       method: "POST",
       headers: {"Content-Type" : "application/json"},
-      body: JSON.stringify(POSTPlant)
+      body: JSON.stringify(newPlant)
     })
     .then(response=> response.json())
     .then(data => console.log(data))
     .catch(error=>console.error("error"))
-    },[onSubmitPlants])
+
+   
+  }
+  // const POSTPlant = {id: plants.length +`${name}`, name: name, image: image, price: price}
+
+  // useEffect(()=>{
+  //   fetch("http://localhost:6001/plants",{
+  //     method: "POST",
+  //     headers: {"Content-Type" : "application/json"},
+  //     body: JSON.stringify(POSTPlant)
+  //   })
+  //   .then(response=> response.json())
+  //   .then(data => console.log(data))
+  //   .catch(error=>console.error("error"))
+  //   },[onSubmitPlants])
 
   return (
     <div className="new-plant-form">
