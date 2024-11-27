@@ -1,9 +1,16 @@
 import React, { useState } from "react";
 
-function PlantCard({plant}) {
+function PlantCard({plant, plants, setPlants}) {
   const [isInStock, setIsInStock] = useState(true)
   function handleClick(){
     setIsInStock(p=>!p)
+  }
+
+  function handleDelete(){
+    setPlants(plants.filter(p=> p.id !== plant.id))
+
+    fetch(`http://localhost:6001/plants/${plant.id}`,{method: "DELETE"})
+    .catch(error => console.error("could not delete"))
   }
   return (
     <li className="card" data-testid="plant-item">
@@ -15,6 +22,8 @@ function PlantCard({plant}) {
       ) : (
         <button onClick={handleClick}>Out of Stock</button>
       )}
+      {/* <button onClick={}>Update Price</button> */}
+      <button onClick={handleDelete}>Delete</button>
     </li>
   );
 }

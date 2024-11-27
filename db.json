@@ -41,18 +41,6 @@
       "name": "Fiddle Leaf Fig",
       "image": "./images/fiddle-leaf-fig.jpg",
       "price": 55
-    },
-    {
-      "id": "7Moogle",
-      "name": "Moogle",
-      "image": "https://i.imgur.com/VDaPXOA_d.webp?maxwidth=520&shape=thumb&fidelity=high",
-      "price": "0.01"
-    },
-    {
-      "id": "8Moogle",
-      "name": "Moogle",
-      "image": "https://i.imgur.com/VDaPXOA_d.webp?maxwidth=520&shape=thumb&fidelity=high",
-      "price": "0.01"
     }
   ]
 }
