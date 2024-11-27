@@ -26,25 +26,15 @@ function PlantCard({plant, plants, setPlants}) {
   
   function submitPrice(e){
     e.preventDefault()
-    
-    // const updatedPlants = plants.map(p=>{
-    //   if(p.id===plant.id){
-    //     const updatedPlant = {...p, price: newPrice}
-    //     return updatedPlant
-    //   } else return p
-    // })
-    
+  
     
 
     fetch(`http://localhost:6001/plants/${plant.id}`, {method: "PATCH", headers: {"Content-Type" : "application/json"}, body: JSON.stringify({price: newPrice})})
     .then(response=>response.json())
     .then((data) => {
-      if (data.id === plant.id) {
-        
-        const updatedPlants = plants.map((p) =>
-          p.id === plant.id ? { ...p, price: data.price } : p
-        );
-        setPlants(updatedPlants);  
+      if (data.id === plant.id) {const updatedPlants = plants.map((p) => p.id === plant.id ? { ...p, price: data.price } : p
+        )
+        setPlants(updatedPlants)  
       }
     })
     .catch(error => console.error("could not patch price"))
